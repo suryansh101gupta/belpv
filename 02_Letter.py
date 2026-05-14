@@ -27,8 +27,9 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-from tensorflow.keras.layers import Dense
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.losses import sparse_categorical_crossentropy
 
 num_classes = 26
 
@@ -40,9 +41,8 @@ model.add(Dense(num_classes, activation="softmax"))
 
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-model.summary()
-
 model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+model.summary()
 
 sample_idx = 8
 sample_image = X_test[sample_idx].reshape(1, -1)
